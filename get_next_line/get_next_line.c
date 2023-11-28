@@ -6,118 +6,152 @@
 /*   By: elevast <elevast@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 10:55:12 by elevast           #+#    #+#             */
-/*   Updated: 2023/11/16 13:28:23 by elevast          ###   ########.fr       */
+/*   Updated: 2023/11/28 15:31:30 by elevast          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*ft_buff_join(char *buffer, char *buffer2)
+char	*ft_buff_join(char *global_buffer, char *local_buffer)
 {
-	char	*temp;
+	size_t	len_global;
+	size_t	len_local;
+	char	*appended;
+	size_t	i;
+	size_t	j;
 
-	temp = ft_strjoin(buffer, buffer2);
-	free(buffer);
-	return (temp);
+	if (!global_buffer || !local_buffer)
+		return (NULL);
+	len_global = ft_strlen(global_buffer);
+	len_local = ft_strlen(local_buffer);
+	appended = malloc((len_global + len_local + 1) * sizeof(char));
+	if (!appended)
+		return (NULL);
+	i = 0;
+	j = 0;
+	while (j < len_global)
+		appended[i++] = global_buffer[j++];
+	j = 0;
+	while (j < len_local)
+		appended[i++] = local_buffer[j++];
+	appended[i] = '\0';
+	free(global_buffer);
+	return (appended);
 }
 
-char	*ft_line(char *buffer)
+char	*ft_line(char *global_buffer)
 {
-	int		i;
+	size_t	len;
+	size_t	i;
 	char	*line;
 
+	len = 0;
 	i = 0;
-	if (!buffer)
+	if (!global_buffer[i])
 		return (NULL);
-	while (buffer[i] && buffer[i] != '\n')
-		i++;
-	line = ft_calloc((i + 2), sizeof(char));
+	while (global_buffer[len] && global_buffer[len] != '\n')
+		len++;
+	line = malloc((len + 2) * sizeof(char));
 	if (!line)
 		return (NULL);
-	i = 0;
-	while (buffer[i] && buffer[i] != '\n')
+	while (i <= len)
 	{
-		line[i] = buffer[i];
+		line[i] = global_buffer[i];
 		i++;
 	}
-	if (buffer[i] == '\n')
-		line[i] = '\n';
-	line[i + 1] = '\0';
+	line[i] = '\0';
 	return (line);
 }
 
-char	*ft_next(char *buffer)
+char	*ft_next(char	*global_buffer)
 {
-	int		i;
-	int		j;
-	char	*res;
+	size_t	i;
+	char	*new;
+	size_t	j;
 
 	i = 0;
-	j = 0;
-	while (buffer[i] && buffer[i] != '\n')
+	while (global_buffer[i] && global_buffer[i] != '\n')
 		i++;
-	if (!buffer[i])
+	if (!global_buffer[i])
 	{
-		free(buffer);
+		free(global_buffer);
 		return (NULL);
 	}
-	res = ft_calloc((ft_strlen(buffer) - i + 1), sizeof(char));
-	if (!res)
+	new = malloc(((ft_strlen(global_buffer) - i) + 1) * sizeof(char));
+	if (!new)
 		return (NULL);
 	i++;
-	while (buffer[i])
-	{
-		res[j++] = buffer[i++];
-	}
-	res[j] = '\0';
-	free (buffer);
-	return (res);
+	j = 0;
+	while (global_buffer[i])
+		new[j++] = global_buffer[i++];
+	new[j] = '\0';
+	free(global_buffer);
+	return (new);
 }
 
-char	*ft_read_file(int fd, char *res)
+char	*ft_read_file(int fd, char *global_buffer)
 {
 	char	*buffer;
-	int		bytes_read;
+	int		bytes_rd;
 
-	if (!res)
-		res = ft_calloc(1, 1);
-	buffer = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
+	if (global_buffer == NULL)
+		global_buffer = ft_calloc(1, sizeof(char));
+	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!buffer)
 		return (NULL);
-	bytes_read = 1;
-	while (bytes_read > 0)
+	bytes_rd = 1;
+	while (bytes_rd > 0)
 	{
-		bytes_read = read(fd, buffer, BUFFER_SIZE);
-		if (bytes_read == -1)
+		bytes_rd = read(fd, buffer, BUFFER_SIZE);
+		if (bytes_rd == -1 || (bytes_rd == 0 && global_buffer == NULL))
 		{
+			free(global_buffer);
 			free(buffer);
 			return (NULL);
 		}
-		if (bytes_read < BUFFER_SIZE)
-			buffer[bytes_read] = '\0';
-		res = ft_buff_join(res, buffer);
-		if (ft_strchr(buffer, '\n'))
+		buffer[bytes_rd] = '\0';
+		global_buffer = ft_buff_join(global_buffer, buffer);
+		if (ft_strchr(global_buffer, '\n') == '\n')
 			break ;
 	}
-	free (buffer);
-	return (res);
+	free(buffer);
+	return (global_buffer);
 }
 
 char	*get_next_line(int fd)
 {
-	static char	*static_buffer;
+	static char	*global_buffer;
 	char		*line;
 
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	static_buffer = ft_read_file(fd, static_buffer);
-	if (!static_buffer || *static_buffer == '\0')
-	{
-		free(static_buffer);
-		static_buffer = NULL;
+	global_buffer = ft_read_file(fd, global_buffer);
+	if (!global_buffer)
 		return (NULL);
-	}
-	line = ft_line(static_buffer);
-	static_buffer = ft_next(static_buffer);
+	line = ft_line(global_buffer);
+	global_buffer = ft_next(global_buffer);
 	return (line);
 }
+
+/*int main() {
+    int fd;
+    char *line;
+
+    // Ouvre un fichier pour la lecture
+    fd = open("exemple.txt", O_RDONLY);
+    if (fd < 0) {
+        perror("Erreur lors de l'ouverture du fichier");
+        return -1;
+    }
+
+    // Lecture et affichage des lignes
+    while ((line = get_next_line(fd)) != NULL) {
+        printf("%s\n", line);
+        free(line);
+    }
+
+    // Fermeture du fichier
+    close(fd);
+
+    return 0;
+}*/

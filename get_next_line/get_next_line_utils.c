@@ -5,82 +5,50 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: elevast <elevast@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/15 10:55:21 by elevast           #+#    #+#             */
-/*   Updated: 2023/11/16 13:24:47 by elevast          ###   ########.fr       */
+/*   Created: 2023/11/22 14:25:52 by elevast           #+#    #+#             */
+/*   Updated: 2023/11/28 15:32:32 by elevast          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-void	ft_bzero(void *s, size_t n)
+size_t	ft_strlen(const char *str)
 {
-	unsigned char	*ptr;
-	unsigned long	i;
-
-	ptr = s;
-	i = 0;
-	while (i < n)
-	{
-		ptr[i] = 0;
-		i++;
-	}
-}
-
-void	*ft_calloc(size_t count, size_t size)
-{
-	void	*ptr;
-
-	ptr = malloc(count * size);
-	if (ptr == NULL)
-		return (ptr);
-	ft_bzero(ptr, size * count);
-	return (ptr);
-}
-
-char	*ft_strchr(const char *s, int c)
-{
-	int		i;
+	size_t	i;
 
 	i = 0;
-	while (s[i])
-	{
-		if (s[i] == (char)c)
-			return ((char *)&s[i]);
+	if (!str)
+		return (0);
+	while (str[i])
 		i++;
-	}
-	if (s[i] == (char)c)
-		return ((char *)&s[i]);
-	return (NULL);
+	return (i);
 }
 
-int	ft_strlen(const char *str)
+int	ft_strchr(const char *str, int ch)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
 	while (str[i])
 	{
-		i++;
+		if (str[i++] == ch)
+			return (ch);
 	}
-	return (i);
+	return (0);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+void	*ft_calloc(size_t nmemb, size_t size)
 {
-	int		i;
-	int		j;
-	char	*tab;
+	size_t	total;
+	size_t	i;
+	char	*alloced;
 
-	j = 0;
+	total = nmemb * size;
 	i = 0;
-	tab = (char *)malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
-	if (!tab)
+	alloced = malloc(total);
+	if (!alloced)
 		return (NULL);
-	while (s1[i])
-		tab[j++] = s1[i++];
-	i = 0;
-	while (s2[i])
-		tab[j++] = s2[i++];
-	tab[j] = '\0';
-	return (tab);
+	while (total-- > 0)
+		alloced[i++] = '\0';
+	return ((void *)alloced);
 }
