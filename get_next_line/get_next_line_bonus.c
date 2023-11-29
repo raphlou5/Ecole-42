@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elevast <elevast@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/15 10:55:12 by elevast           #+#    #+#             */
-/*   Updated: 2023/11/29 10:34:20 by elevast          ###   ########.fr       */
+/*   Created: 2023/11/29 10:42:51 by elevast           #+#    #+#             */
+/*   Updated: 2023/11/29 11:01:53 by elevast          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*ft_buff_join(char *global_buffer, char *local_buffer)
 {
@@ -120,38 +120,15 @@ char	*ft_read_file(int fd, char *global_buffer)
 
 char	*get_next_line(int fd)
 {
-	static char	*global_buffer;
+	static char	*global_buffer[MAX_FDS];
 	char		*line;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || fd > MAX_FDS || BUFFER_SIZE <= 0)
 		return (NULL);
-	global_buffer = ft_read_file(fd, global_buffer);
-	if (!global_buffer)
+	global_buffer[fd] = ft_read_file(fd, global_buffer[fd]);
+	if (!global_buffer[fd])
 		return (NULL);
-	line = ft_line(global_buffer);
-	global_buffer = ft_next(global_buffer);
+	line = ft_line(global_buffer[fd]);
+	global_buffer[fd] = ft_next(global_buffer[fd]);
 	return (line);
 }
-
-/*int main() {
-    int fd;
-    char *line;
-
-    // Ouvre un fichier pour la lecture
-    fd = open("exemple.txt", O_RDONLY);
-    if (fd < 0) {
-        perror("Erreur lors de l'ouverture du fichier");
-        return -1;
-    }
-
-    // Lecture et affichage des lignes
-    while ((line = get_next_line(fd)) != NULL) {
-        printf("%s\n", line);
-        free(line);
-    }
-
-    // Fermeture du fichier
-    close(fd);
-
-    return 0;
-}*/
