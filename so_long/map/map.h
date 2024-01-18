@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elevast <elevast@student.42.fr>            +#+  +:+       +#+        */
+/*   By: edouard <edouard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 13:26:55 by elevast           #+#    #+#             */
-/*   Updated: 2024/01/17 15:13:43 by elevast          ###   ########.fr       */
+/*   Updated: 2024/01/18 14:03:26 by edouard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,5 +42,11 @@ typedef struct s_mapcheckerdata
 	t_bool		b_exit;
 	t_bool		b_collect;
 }				t_mapcheckerdata;
+
+int	valid_char(char c);
+char	**read_map(char *file);
+int	valid_uniquechar(char c, char checker, t_bool *player);
+int	valid_border(char c, t_vector point, t_vector size);
+int	ft_linecount(char **table);
 
 #endif
