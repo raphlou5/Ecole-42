@@ -6,7 +6,7 @@
 /*   By: edouard <edouard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 13:26:55 by elevast           #+#    #+#             */
-/*   Updated: 2024/01/18 14:03:26 by edouard          ###   ########.fr       */
+/*   Updated: 2024/01/23 12:26:33 by edouard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,6 @@ char	**read_map(char *file);
 int	valid_uniquechar(char c, char checker, t_bool *player);
 int	valid_border(char c, t_vector point, t_vector size);
 int	ft_linecount(char **table);
+t_tile	**tilemap_gen(char **map, t_game *game);
 
 #endif
