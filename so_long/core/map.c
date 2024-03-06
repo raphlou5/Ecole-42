@@ -6,7 +6,7 @@
 /*   By: elevast <elevast@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 15:19:41 by edouard           #+#    #+#             */
-/*   Updated: 2024/02/23 10:30:46 by elevast          ###   ########.fr       */
+/*   Updated: 2024/03/05 14:37:23 by elevast          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ char	**parse_map(int fd, t_data *data)
 
 	i = 1;
 	data->map = ft_split(get_map(fd), '\n');
+	if (data->map[0] == NULL)
+		return (data->map);
 	ft_check_content(data);
 	if (!(ft_check_format(data->map)))
 		return (ft_free_map(data));
@@ -102,7 +104,7 @@ char	**map_core(char **str, t_data *data)
 			return (ft_error(
 					"Error\nNeed 1 Player/Exit and at least 1 Object\n"));
 		}
-		if (!(valid_path_core(data)))
+		if (data->map != NULL && !(valid_path_core(data)))
 			return (ft_error("Error\nNo path possible\n"));
 	}
 	return (data->map);

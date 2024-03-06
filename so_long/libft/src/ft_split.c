@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edouard <edouard@student.42.fr>            +#+  +:+       +#+        */
+/*   By: elevast <elevast@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 15:23:12 by edouard           #+#    #+#             */
-/*   Updated: 2024/02/22 15:23:14 by edouard          ###   ########.fr       */
+/*   Updated: 2024/03/05 14:37:06 by elevast          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,17 @@ static int	ft_strnchr(char *str, char sep)
 	return (i);
 }
 
+char	**empty_string(void)
+{
+	char	**ret;
+
+	ret = (char **) malloc(sizeof(char *));
+	if (ret == NULL)
+		return (NULL);
+	ret[0] = NULL;
+	return (ret);
+}
+
 char	**ft_split(char *str, char sep)
 {
 	int		i;
@@ -51,6 +62,8 @@ char	**ft_split(char *str, char sep)
 
 	i = 0;
 	y = 0;
+	if (!str || *str == '\0')
+		return (empty_string());
 	ret = (char **)malloc(sizeof(char *) * (ft_charcpt(str, sep) + 1));
 	if (ret == NULL)
 		return (NULL);
