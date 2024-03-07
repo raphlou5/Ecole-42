@@ -1,26 +1,33 @@
+SOURCES = server.c client.c
+OBJECTS = $(SOURCES:.c=.o)
+
 CC = gcc
-CFLAGS = -Wall -Wextra
+CFLAGS = -Wall -Wextra -Werror -fPIC
+LDFLAGS = -L./printf -lprintf
 
-CLIENT_SRC = client.c
-CLIENT_OBJ = $(CLIENT_SRC:.c=.o)
-CLIENT_BIN = client
+all: server client
 
-SERVER_SRC = server.c
-SERVER_OBJ = $(SERVER_SRC:.c=.o)
-SERVER_BIN = server
+bonus: server client
 
-.PHONY: all clean
+server: server.o printf
+	$(CC) -o $@ $< $(LDFLAGS)
 
-all: $(CLIENT_BIN) $(SERVER_BIN)
-
-$(CLIENT_BIN): $(CLIENT_OBJ)
-	$(CC) $(CFLAGS) -o $@ $^
-
-$(SERVER_BIN): $(SERVER_OBJ)
-	$(CC) $(CFLAGS) -o $@ $^
+client: client.o printf
+	$(CC) -o $@ $< $(LDFLAGS)
 
 %.o: %.c
-	$(CC) $(CFLAGS) -c -o $@ $<
+	$(CC) -c $(CFLAGS) $<
+
+printf:
+	make -C printf
 
 clean:
-	rm -f $(CLIENT_OBJ) $(CLIENT_BIN) $(SERVER_OBJ) $(SERVER_BIN)
+	rm -f $(OBJECTS)
+	make -C printf clean
+	
+fclean: clean
+	rm -f server client
+
+re: fclean all
+
+.PHONY: all bonus printf clean fclean re
