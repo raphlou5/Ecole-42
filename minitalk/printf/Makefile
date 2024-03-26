@@ -1,28 +1,22 @@
+NAME = printf.a
+
+CFLAGS = -Wall -Wextra -Werror
+
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -fPIC
+SOURCES = ft_printf.c ft_printhex.c ft_printpointer.c ft_putchar.c ft_putnbr.c ft_putstr.c ft_putunsnumber.c
 
-NAME = libprintf.a
+OBJECTS = $(SOURCES:.c=.o)
 
-FUNC =	ft_printf.c ft_printf_utils.c ft_printf_utils2.c
+all: $(NAME)
 
-OBJS = ${FUNC:.c=.o} 
+$(NAME): $(OBJECTS)
+	ar -rc $(NAME) $(OBJECTS)
 
+clean:
+	rm -rf $(OBJECTS)
 
-.c.o:
-		${CC} ${CFLAGS} -c $< -o ${<:.c=.o}
+fclean: clean
+	rm -rf $(NAME)
 
-${NAME}:	${OBJS}
-		ar -rsc ${NAME} ${OBJS}
-
-all: 	${NAME}
-
-clean:	
-		rm -f ${OBJS}
-
-fclean:	clean
-		rm -f ${NAME}
-
-re:	fclean all
-
-.PHONY: all clean fclean re
+re: fclean all

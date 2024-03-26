@@ -1,28 +1,55 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.h                                        :+:      :+:    :+:   */
+/*   ft_putnbr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elevast <elevast@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 13:04:09 by elevast           #+#    #+#             */
-/*   Updated: 2024/03/09 08:39:46 by elevast          ###   ########.fr       */
+/*   Updated: 2024/03/09 08:40:01 by elevast          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_H
-# define FT_PRINTF_H
+#include "ft_printf.h"
 
-# include <stdarg.h>
-# include <stdlib.h>
-# include <unistd.h>
+static int	ft_len(int numbers)
+{
+	int	i;
 
-int	ft_printf(const char *symboll, ...);
-int	ft_printhex(unsigned int c, char format);
-int	printthapointer(unsigned long long c, char format);
-int	ft_putchar(int c);
-int	ft_putnbr(int c);
-int	ft_printstr(char *s);
-int	ft_putunsnumber(unsigned int c);
+	i = 0;
+	if (numbers <= 0)
+	{
+		i++;
+		numbers *= -1;
+	}
+	while (numbers != 0)
+	{
+		i++;
+		numbers /= 10;
+	}
+	return (i);
+}
 
-#endif
+int	ft_putnbr(int c)
+{
+	int	len;
+
+	if (c == -2147483648)
+		return (write(1, "-2147483648", 11));
+	len = ft_len(c);
+	if (c < 0)
+	{
+		ft_putchar('-');
+		c = c * -1;
+	}
+	if (c >= 10)
+	{
+		ft_putnbr(c / 10);
+		ft_putnbr(c % 10);
+	}
+	else if (c < 10)
+	{
+		ft_putchar(c + '0');
+	}
+	return (len);
+}

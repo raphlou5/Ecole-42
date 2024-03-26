@@ -6,62 +6,62 @@
 /*   By: elevast <elevast@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 13:04:09 by elevast           #+#    #+#             */
-/*   Updated: 2023/11/29 13:56:17 by elevast          ###   ########.fr       */
+/*   Updated: 2024/03/09 08:39:40 by elevast          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	conv(char form, va_list args)
+int	ft_format(const char symboll, va_list ptr)
 {
-	int	result;
+	int	res;
 
-	result = 0;
-	if (form == 'c')
-		result = ft_putchar((char) va_arg(args, int));
-	else if (form == 's')
-		result = ft_putstr(va_arg(args, char *));
-	else if (form == 'p')
-		result = ft_putpointer(va_arg(args, void *));
-	else if (form == 'd')
-		result = ft_putnbr(va_arg(args, int));
-	else if (form == 'i')
-		result = ft_putnbr(va_arg(args, int));
-	else if (form == 'u')
-		result = ft_unsigned_putnbr(va_arg(args, unsigned int));
-	else if (form == 'x')
-		result = ft_puthexalower(va_arg(args, unsigned int));
-	else if (form == 'X')
-		result = ft_puthexaupper(va_arg(args, unsigned ));
-	else if (form == '%')
-		result = ft_putchar('%');
-	return (result);
+	res = 0;
+	if (symboll == 'c')
+		res = res + ft_putchar(va_arg(ptr, int));
+	else if (symboll == 'x')
+		res = res + ft_printhex(va_arg(ptr, unsigned int), 'x');
+	else if (symboll == 'X')
+		res = res + ft_printhex(va_arg(ptr, unsigned int), 'X');
+	else if (symboll == 'p')
+		res = res + printthapointer(va_arg(ptr, unsigned long long), 'p');
+	else if (symboll == 's')
+		res = res + ft_printstr(va_arg(ptr, char *));
+	else if (symboll == 'd' || symboll == 'i')
+		res = res + ft_putnbr(va_arg(ptr, int));
+	else if (symboll == 'u')
+		res = res + ft_putunsnumber(va_arg(ptr, unsigned int));
+	else if (symboll == '%')
+	{
+		res = res + ft_putchar('%');
+	}
+	else
+		res = res + ft_putchar(symboll);
+	return (res);
 }
 
-int	ft_printf(const char *format, ...)
+int	ft_printf(const char *symboll, ...)
 {
-	va_list	args;
+	va_list	ptr;
+	int		res;
 	int		i;
-	int		len;
 
-	va_start(args, format);
+	res = 0;
 	i = 0;
-	len = 0;
-	if (!format)
+	va_start(ptr, symboll);
+	while (symboll[i])
 	{
-		return (0);
-	}
-	while (format[i] != '\0')
-	{
-		if (format[i] == '%')
+		if (symboll[i] == '%')
 		{
-			len = len + conv(format[i + 1], args);
+			if (symboll[i + 1] == '\0')
+				break ;
+			res = res + ft_format(symboll[i + 1], ptr);
 			i++;
 		}
 		else
-			len = len + ft_putchar(format[i]);
+			res = res + ft_putchar(symboll[i]);
 		i++;
 	}
-	va_end(args);
-	return (len);
+	va_end(ptr);
+	return (res);
 }

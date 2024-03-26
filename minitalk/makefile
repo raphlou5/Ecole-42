@@ -1,33 +1,27 @@
-SOURCES = server.c client.c
+SOURCES = server.c client.c manage_errors.c
 OBJECTS = $(SOURCES:.c=.o)
 
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror -fPIC
-LDFLAGS = -L./printf -lprintf
 
-all: server client
+all: printf.a server client
 
-bonus: server client
+server: server.o 
+	$(CC) -o $@ $< ./printf/printf.a
 
-server: server.o printf
-	$(CC) -o $@ $< $(LDFLAGS)
-
-client: client.o printf
-	$(CC) -o $@ $< $(LDFLAGS)
+client: client.o manage_errors.o
+	$(CC) -o $@ $^ ./printf/printf.a
 
 %.o: %.c
 	$(CC) -c $(CFLAGS) $<
 
-printf:
-	make -C printf
-
 clean:
 	rm -f $(OBJECTS)
 	make -C printf clean
-	
+    
 fclean: clean
 	rm -f server client
 
 re: fclean all
 
-.PHONY: all bonus printf clean fclean re
+.PHONY: all bonus printf.a clean fclean re

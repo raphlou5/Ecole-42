@@ -1,28 +1,48 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.h                                        :+:      :+:    :+:   */
+/*   ft_putstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elevast <elevast@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 13:04:09 by elevast           #+#    #+#             */
-/*   Updated: 2024/03/09 08:39:46 by elevast          ###   ########.fr       */
+/*   Updated: 2024/03/09 08:40:02 by elevast          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_H
-# define FT_PRINTF_H
+#include "ft_printf.h"
 
-# include <stdarg.h>
-# include <stdlib.h>
-# include <unistd.h>
+static int	ft_countlen(char *s)
+{
+	int	size;
+	int	i;
 
-int	ft_printf(const char *symboll, ...);
-int	ft_printhex(unsigned int c, char format);
-int	printthapointer(unsigned long long c, char format);
-int	ft_putchar(int c);
-int	ft_putnbr(int c);
-int	ft_printstr(char *s);
-int	ft_putunsnumber(unsigned int c);
+	size = 0;
+	i = 0;
+	while (s[i] != '\0')
+	{
+		size++;
+		i++;
+	}
+	return (size);
+}
 
-#endif
+int	ft_printstr(char *s)
+{
+	int	i;
+	int	len;
+
+	i = 0;
+	if (!s)
+	{
+		write(1, "(null)", 6);
+		return (6);
+	}
+	len = ft_countlen(s);
+	while (s[i] != '\0')
+	{
+		write(1, &s[i], 1);
+		i++;
+	}
+	return (len);
+}
