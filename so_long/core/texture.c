@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   texture.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edouard <edouard@student.42.fr>            +#+  +:+       +#+        */
+/*   By: elevast <elevast@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 15:20:33 by edouard           #+#    #+#             */
-/*   Updated: 2024/02/22 15:20:36 by edouard          ###   ########.fr       */
+/*   Updated: 2024/03/27 13:46:02 by elevast          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,14 @@ int	end(t_data *data)
 			free(data->map[i]);
 			i++;
 		}
+		i = 0;
+		while (data->map_dup[i] != NULL)
+		{
+			free(data->map_dup[i]);
+			i++;
+		}
 		free(data->map);
+		free(data->map_dup);
 		mlx_destroy_image(data->mlx_ptr, data->img.img_wall);
 		mlx_destroy_image(data->mlx_ptr, data->img.img_floor);
 		mlx_destroy_image(data->mlx_ptr, data->img.img_collect);

@@ -6,7 +6,7 @@
 /*   By: elevast <elevast@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 16:39:33 by edouard           #+#    #+#             */
-/*   Updated: 2024/02/23 11:29:12 by elevast          ###   ########.fr       */
+/*   Updated: 2024/03/27 15:56:49 by elevast          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,11 @@ void	ft_player_pos(t_data *data)
 
 	i = 0;
 	y = 0;
-	while (data->map_dup[i])
+	while (data->map[i])
 	{
-		while (data->map_dup[i][y])
+		while (data->map[i][y])
 		{
-			if (data->map_dup[i][y] == data->content.player)
+			if (data->map[i][y] == data->content.player)
 			{
 				data->player_pos.x = i;
 				data->player_pos.y = y;
@@ -54,11 +54,11 @@ void	ft_count_collectibles(t_data *data)
 
 	i = 0;
 	y = 0;
-	while (data->map_dup[i])
+	while (data->map[i])
 	{
-		while (data->map_dup[i][y])
+		while (data->map[i][y])
 		{
-			if (data->map_dup[i][y] == data->content.collect)
+			if (data->map[i][y] == data->content.collect)
 				data->total_collectibles++;
 			y++;
 		}
@@ -69,9 +69,8 @@ void	ft_count_collectibles(t_data *data)
 
 int	valid_path(t_data *data, int x, int y)
 {
-	static int	e;
-	static int	c;
-
+    static int e;
+    static int c;
 	if (x < 0 || y < 0 || x > data->width || y > data->height
 		|| data->map_dup[y][x] == '1' || data->map_dup[y][x] == 'X')
 		return (0);
@@ -94,10 +93,24 @@ int	valid_path(t_data *data, int x, int y)
 		return (false);
 }
 
+void free_map_dup(t_data *data)
+{
+    int i;
+    for (i = 0; data->map_dup[i]; i++)
+        free(data->map_dup[i]);
+    free(data->map_dup);
+}
+
 int	valid_path_core(t_data *data)
 {
 	copy_map(data->map, data);
 	ft_player_pos(data);
 	ft_count_collectibles(data);
-	return (valid_path(data, data->player_pos.x, data->player_pos.y));
+	if (valid_path(data, data->player_pos.x, data->player_pos.y) == 0)
+	{
+		free_map_dup(data);
+		return(0);
+	}
+	else
+		return (1);
 }

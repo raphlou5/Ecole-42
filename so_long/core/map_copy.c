@@ -6,7 +6,7 @@
 /*   By: elevast <elevast@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 11:25:43 by elevast           #+#    #+#             */
-/*   Updated: 2024/02/23 11:30:04 by elevast          ###   ########.fr       */
+/*   Updated: 2024/03/27 13:46:48 by elevast          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ char	**allocate_new_map_memory(int size)
 	char	**new_map;
 
 	new_map = (char **)malloc((size + 1) * sizeof(char *));
+	if (new_map == NULL)
+		return (NULL);
 	return (new_map);
 }
 
