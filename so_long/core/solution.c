@@ -6,7 +6,7 @@
 /*   By: elevast <elevast@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 16:39:33 by edouard           #+#    #+#             */
-/*   Updated: 2024/03/27 15:56:49 by elevast          ###   ########.fr       */
+/*   Updated: 2024/04/04 15:05:51 by elevast          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,28 +69,31 @@ void	ft_count_collectibles(t_data *data)
 
 int	valid_path(t_data *data, int x, int y)
 {
-    static int e;
-    static int c;
 	if (x < 0 || y < 0 || x > data->width || y > data->height
 		|| data->map_dup[y][x] == '1' || data->map_dup[y][x] == 'X')
 		return (0);
 	if (data->map_dup[y][x] == 'E')
 	{
-		e++;
+		data->e++;
 		data->map_dup[y][x] = 'X';
-		return (0);
 	}
 	if (data->map_dup[y][x] == 'C')
-		c++;
+		data->c++;
 	data->map_dup[y][x] = 'X';
 	valid_path(data, x + 1, y);
 	valid_path(data, x - 1, y);
 	valid_path(data, x, y + 1);
 	valid_path(data, x, y - 1);
-	if (e == 1 && c == data->total_collectibles)
+	if (data->e == 1 && data->c == data->total_collectibles)
+	{
+		printf("%d", data->c);
 		return (true);
+	}
 	else
+	{
+		printf("%d", data->e);
 		return (false);
+	}
 }
 
 void free_map_dup(t_data *data)
@@ -103,6 +106,8 @@ void free_map_dup(t_data *data)
 
 int	valid_path_core(t_data *data)
 {
+	data->c = 0;
+	data->e = 0;
 	copy_map(data->map, data);
 	ft_player_pos(data);
 	ft_count_collectibles(data);
@@ -114,3 +119,4 @@ int	valid_path_core(t_data *data)
 	else
 		return (1);
 }
+

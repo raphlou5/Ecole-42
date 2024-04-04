@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edouard <edouard@student.42.fr>            +#+  +:+       +#+        */
+/*   By: elevast <elevast@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 15:21:30 by edouard           #+#    #+#             */
-/*   Updated: 2024/02/22 15:21:31 by edouard          ###   ########.fr       */
+/*   Updated: 2024/04/04 14:16:51 by elevast          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,8 @@ typedef struct data_s
 	t_pos	player_pos;
 	int		count;
 	int		total_collectibles;
+	int		e;
+	int		c;
 }				t_data;
 
 int		ft_strchr(char *str, char *cmp);

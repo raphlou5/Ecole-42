@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edouard <edouard@student.42.fr>            +#+  +:+       +#+        */
+/*   By: elevast <elevast@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 15:20:19 by edouard           #+#    #+#             */
-/*   Updated: 2024/02/22 15:20:20 by edouard          ###   ########.fr       */
+/*   Updated: 2024/04/04 14:17:10 by elevast          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ void	set_content(t_cnt *content)
 
 void	set_img(t_data *data)
 {
+	data->e = 0;
+	data->c = 0;
 	data->total_collectibles = 0;
 	data->img.height = 80;
 	data->img.width = 80;
