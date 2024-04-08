@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   solution.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elevast <elevast@student.42.fr>            +#+  +:+       +#+        */
+/*   By: edouard <edouard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 16:39:33 by edouard           #+#    #+#             */
-/*   Updated: 2024/04/04 15:05:51 by elevast          ###   ########.fr       */
+/*   Updated: 2024/04/08 11:47:12 by edouard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ void	ft_player_pos(t_data *data)
 		{
 			if (data->map[i][y] == data->content.player)
 			{
-				data->player_pos.x = i;
-				data->player_pos.y = y;
+				data->player_pos_x = i;
+				data->player_pos_y = y;
 				return ;
 			}
 			y++;
@@ -45,6 +45,7 @@ void	ft_player_pos(t_data *data)
 		y = 0;
 		i++;
 	}
+
 }
 
 void	ft_count_collectibles(t_data *data)
@@ -67,56 +68,69 @@ void	ft_count_collectibles(t_data *data)
 	}
 }
 
-int	valid_path(t_data *data, int x, int y)
-{
-	if (x < 0 || y < 0 || x > data->width || y > data->height
-		|| data->map_dup[y][x] == '1' || data->map_dup[y][x] == 'X')
-		return (0);
-	if (data->map_dup[y][x] == 'E')
-	{
-		data->e++;
-		data->map_dup[y][x] = 'X';
-	}
-	if (data->map_dup[y][x] == 'C')
-		data->c++;
-	data->map_dup[y][x] = 'X';
-	valid_path(data, x + 1, y);
-	valid_path(data, x - 1, y);
-	valid_path(data, x, y + 1);
-	valid_path(data, x, y - 1);
-	if (data->e == 1 && data->c == data->total_collectibles)
-	{
-		printf("%d", data->c);
-		return (true);
-	}
-	else
-	{
-		printf("%d", data->e);
-		return (false);
-	}
-}
 
 void free_map_dup(t_data *data)
 {
+    char **map_dup = data->map_dup;
     int i;
-    for (i = 0; data->map_dup[i]; i++)
-        free(data->map_dup[i]);
-    free(data->map_dup);
+    for (i = 0; map_dup[i]; i++)
+        free(map_dup[i]);
+    free(map_dup);
+}
+
+static bool	check_square(size_t y, size_t x, t_data *data)
+{
+	if (data->map_dup == NULL)
+		return false;
+	if (data->map_dup[y][x] == '1')
+		return (false);
+	else if (data->map_dup[y][x] == 'C')
+		data->c++;
+	else if (data->map_dup[y][x] == 'E')
+		data->e = 1;
+	return (true);
+}
+
+static void	search_all_directions(size_t y, size_t x, t_data *data)
+{
+	if (!check_square(y, x, data))
+		return ;
+	else
+		data->map_dup[y][x] = '1';
+	search_all_directions(y, x + 1, data);
+	search_all_directions(y, x - 1, data);
+	search_all_directions(y + 1, x, data);
+	search_all_directions(y - 1, x, data);
+}
+
+int	check_if_playable(t_data *data)
+{
+	search_all_directions(data->player_pos_y, data->player_pos_x, data);
+	if (data->e == 0 || data->c != data->total_collectibles)
+		{
+			free_map_dup(data);
+			return (0);
+		}
+	else
+	{
+		free_map_dup(data);
+		return (1);
+	}
 }
 
 int	valid_path_core(t_data *data)
 {
+	data->total_collectibles = 0;
+	data->map_dup = NULL;
+	data->player_pos_x = 0;
+	data->player_pos_y = 0;
 	data->c = 0;
 	data->e = 0;
 	copy_map(data->map, data);
 	ft_player_pos(data);
 	ft_count_collectibles(data);
-	if (valid_path(data, data->player_pos.x, data->player_pos.y) == 0)
-	{
-		free_map_dup(data);
+	if (check_if_playable(data) == 0)
 		return(0);
-	}
 	else
 		return (1);
 }
-

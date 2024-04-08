@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elevast <elevast@student.42.fr>            +#+  +:+       +#+        */
+/*   By: edouard <edouard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 15:19:41 by edouard           #+#    #+#             */
-/*   Updated: 2024/04/04 13:56:24 by elevast          ###   ########.fr       */
+/*   Updated: 2024/04/08 15:00:28 by edouard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,9 @@ char	*get_map(int fd)
 		}
 		return (buff);
 	}
+
+	free(line_map);
+	free(buff);
 	ft_error("Error\nWrong lecture map\n");
 	return (NULL);
 }
@@ -82,7 +85,7 @@ char	**parse_map(int fd, t_data *data)
 	return (data->map);
 }
 
-char	**map_core(char **str, t_data *data, t_path *path)
+char	**map_core(char **str, t_data *data)
 {
 	int		fd;
 
@@ -104,7 +107,7 @@ char	**map_core(char **str, t_data *data, t_path *path)
 			return (ft_error(
 					"Error\nNeed 1 Player/Exit and at least 1 Object\n"));
 		}
-		if (data->map != NULL && !(valid_path_core(data, path)))
+		if (data->map != NULL && !(valid_path_core(data)))
 		{
 			ft_free_map(data);
 			return (ft_error("Error\nNo path possible\n"));

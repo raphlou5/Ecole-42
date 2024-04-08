@@ -74,6 +74,8 @@ typedef struct data_s
 	int		total_collectibles;
 	int		e;
 	int		c;
+	int		player_pos_x;
+	int		player_pos_y;
 }				t_data;
 
 int		ft_strchr(char *str, char *cmp);
