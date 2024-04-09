@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   solution2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elevast <elevast@student.42.fr>            +#+  +:+       +#+        */
+/*   By: edouard <edouard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 11:45:02 by elevast           #+#    #+#             */
-/*   Updated: 2024/04/09 11:46:38 by elevast          ###   ########.fr       */
+/*   Updated: 2024/04/09 15:51:44 by edouard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,10 @@ static bool	check_square(size_t y, size_t x, t_data *data)
 	else if (data->map_dup[y][x] == 'C')
 		data->c++;
 	else if (data->map_dup[y][x] == 'E')
+	{
 		data->e = 1;
+		return (false);
+	}
 	return (true);
 }
 
