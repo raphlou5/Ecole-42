@@ -80,6 +80,9 @@ typedef struct data_s
 
 int		ft_strchr(char *str, char *cmp);
 void	*ft_error(char *str);
+void	*ft_error_free(char *str, t_data *data);
+void	*ft_free_map(t_data *data);
+void	free_map_dup(t_data *data);
 int		ft_same_char(char *str);
 
 int		ft_same_char(char *str);
@@ -114,5 +117,6 @@ int		end(t_data *data);
 int		valid_path_core(t_data *data);
 char	**create_new_map(char **map);
 void	copy_existing_map(char **map, char **new_map);
+int		check_if_playable(t_data *data);
 
 #endif

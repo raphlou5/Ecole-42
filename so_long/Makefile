@@ -32,14 +32,15 @@ MLX_LIB		=	$(addprefix $(MLX_PATH), $(MLX_FILE))
 
 MLX_EX		=	$(MLX_LIB) $(MLX_FLAG)
 
-C_FILE		=	map.c				\
-				map_checker.c		\
+C_FILE		=	map.c					\
+				map_checker.c			\
 				render.c			\
-				render_mouv.c		\
+				render_mouv.c			\
 				set.c				\
 				texture.c			\
-				utils.c				\
+				utils.c			\
 				solution.c			\
+				solution2.c			\
 				map_copy.c			\
 
 SRC_DIR		=	./core/

@@ -3,14 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edouard <edouard@student.42.fr>            +#+  +:+       +#+        */
+/*   By: elevast <elevast@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 15:19:41 by edouard           #+#    #+#             */
-/*   Updated: 2024/04/08 15:00:28 by edouard          ###   ########.fr       */
+/*   Updated: 2024/04/09 11:40:01 by elevast          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
+
+char	*get_map_help(char *line_map, char *buff)
+{
+	free(line_map);
+	free(buff);
+	ft_error("Error\nWrong lecture map\n");
+	return (NULL);
+}
 
 char	*get_map(int fd)
 {
@@ -36,11 +44,7 @@ char	*get_map(int fd)
 		}
 		return (buff);
 	}
-
-	free(line_map);
-	free(buff);
-	ft_error("Error\nWrong lecture map\n");
-	return (NULL);
+	return (get_map_help(line_map, buff));
 }
 
 void	*ft_free_map(t_data *data)
@@ -102,16 +106,10 @@ char	**map_core(char **str, t_data *data)
 			return (ft_error("Error\nFailed to open file\n"));
 		if ((data->content.count_c == 0 || data->content.count_e != 1
 				|| data->content.count_p != 1) && data->map != NULL)
-		{
-			ft_free_map(data);
-			return (ft_error(
-					"Error\nNeed 1 Player/Exit and at least 1 Object\n"));
-		}
+			return (ft_error_free(
+					"Error\nNeed 1 Player/Exit and least 1 Object\n", data));
 		if (data->map != NULL && !(valid_path_core(data)))
-		{
-			ft_free_map(data);
-			return (ft_error("Error\nNo path possible\n"));
-		}
+			return (ft_error_free("Error\nNo path possible\n", data));
 	}
 	return (data->map);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   solution.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edouard <edouard@student.42.fr>            +#+  +:+       +#+        */
+/*   By: elevast <elevast@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 16:39:33 by edouard           #+#    #+#             */
-/*   Updated: 2024/04/08 11:47:12 by edouard          ###   ########.fr       */
+/*   Updated: 2024/04/09 11:45:24 by elevast          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ void	ft_player_pos(t_data *data)
 		y = 0;
 		i++;
 	}
-
 }
 
 void	ft_count_collectibles(t_data *data)
@@ -68,54 +67,19 @@ void	ft_count_collectibles(t_data *data)
 	}
 }
 
-
-void free_map_dup(t_data *data)
+void	free_map_dup(t_data *data)
 {
-    char **map_dup = data->map_dup;
-    int i;
-    for (i = 0; map_dup[i]; i++)
-        free(map_dup[i]);
-    free(map_dup);
-}
+	char	**map_dup;
+	int		i;
 
-static bool	check_square(size_t y, size_t x, t_data *data)
-{
-	if (data->map_dup == NULL)
-		return false;
-	if (data->map_dup[y][x] == '1')
-		return (false);
-	else if (data->map_dup[y][x] == 'C')
-		data->c++;
-	else if (data->map_dup[y][x] == 'E')
-		data->e = 1;
-	return (true);
-}
-
-static void	search_all_directions(size_t y, size_t x, t_data *data)
-{
-	if (!check_square(y, x, data))
-		return ;
-	else
-		data->map_dup[y][x] = '1';
-	search_all_directions(y, x + 1, data);
-	search_all_directions(y, x - 1, data);
-	search_all_directions(y + 1, x, data);
-	search_all_directions(y - 1, x, data);
-}
-
-int	check_if_playable(t_data *data)
-{
-	search_all_directions(data->player_pos_y, data->player_pos_x, data);
-	if (data->e == 0 || data->c != data->total_collectibles)
-		{
-			free_map_dup(data);
-			return (0);
-		}
-	else
+	map_dup = data->map_dup;
+	i = 0;
+	while (map_dup[i])
 	{
-		free_map_dup(data);
-		return (1);
+		free(map_dup[i]);
+		i++;
 	}
+	free(map_dup);
 }
 
 int	valid_path_core(t_data *data)
@@ -130,7 +94,7 @@ int	valid_path_core(t_data *data)
 	ft_player_pos(data);
 	ft_count_collectibles(data);
 	if (check_if_playable(data) == 0)
-		return(0);
+		return (0);
 	else
 		return (1);
 }
