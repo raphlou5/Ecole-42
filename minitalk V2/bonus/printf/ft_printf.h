@@ -1,28 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk.h                                         :+:      :+:    :+:   */
+/*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elevast <elevast@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/09 08:54:27 by elevast           #+#    #+#             */
-/*   Updated: 2024/03/09 08:54:36 by elevast          ###   ########.fr       */
+/*   Created: 2023/11/29 13:04:09 by elevast           #+#    #+#             */
+/*   Updated: 2024/03/09 08:39:46 by elevast          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_H
-# define MINITALK_H
+#ifndef FT_PRINTF_H
+# define FT_PRINTF_H
 
-# include "printf/ft_printf.h"
-# include <signal.h>
+# include <stdarg.h>
 # include <stdlib.h>
 # include <unistd.h>
-# include <stdio.h>
-# include <string.h>
 
-void	check_pid(int pid);
-void	check_the_end(char *str);
-void	check_the_message(char *str);
-int	ft_atoi(const char *str);
+int	ft_printf(const char *symboll, ...);
+int	ft_printhex(unsigned int c, char format);
+int	printthapointer(unsigned long long c, char format);
+int	ft_putchar(int c);
+int	ft_putnbr(int c);
+int	ft_printstr(char *s);
+int	ft_putunsnumber(unsigned int c);
 
 #endif

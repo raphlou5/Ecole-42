@@ -1,28 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk.h                                         :+:      :+:    :+:   */
+/*   ft_putchar.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elevast <elevast@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/09 08:54:27 by elevast           #+#    #+#             */
-/*   Updated: 2024/03/09 08:54:36 by elevast          ###   ########.fr       */
+/*   Created: 2023/11/29 13:04:09 by elevast           #+#    #+#             */
+/*   Updated: 2024/03/09 08:39:59 by elevast          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_H
-# define MINITALK_H
+#include "ft_printf.h"
 
-# include "printf/ft_printf.h"
-# include <signal.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include <stdio.h>
-# include <string.h>
-
-void	check_pid(int pid);
-void	check_the_end(char *str);
-void	check_the_message(char *str);
-int	ft_atoi(const char *str);
-
-#endif
+int	ft_putchar(int c)
+{
+	write(1, &c, 1);
+	return (1);
+}

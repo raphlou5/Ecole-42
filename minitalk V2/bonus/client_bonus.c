@@ -6,7 +6,7 @@
 /*   By: elevast <elevast@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 10:14:01 by elevast           #+#    #+#             */
-/*   Updated: 2024/05/30 09:56:34 by elevast          ###   ########.fr       */
+/*   Updated: 2024/05/30 10:48:54 by elevast          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	send_string(int pid, const char *message)
 	int		bit_val;
 
 	i = 0;
+	ft_printf("Sending message: %s\n", message);
 	while (i <= strlen(message))
 	{
 		c = message[i];
@@ -53,6 +54,8 @@ void	send_string(int pid, const char *message)
 		}
 		i++;
 	}
+	if (g_ack_received)
+		ft_printf("Message bien reçu par le serveur\n");
 }
 
 int	main(int argc, char *argv[])
