@@ -6,7 +6,7 @@
 /*   By: elevast <elevast@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 10:14:01 by elevast           #+#    #+#             */
-/*   Updated: 2024/05/30 09:56:34 by elevast          ###   ########.fr       */
+/*   Updated: 2024/05/30 16:17:39 by elevast          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	send_string(int pid, const char *message)
 	int		bit_val;
 
 	i = 0;
-	while (i <= strlen(message))
+	while (i <= ft_strlen(message))
 	{
 		c = message[i];
 		bit = 0;
@@ -47,7 +47,7 @@ void	send_string(int pid, const char *message)
 			while (!g_ack_received)
 			{
 				send_bit(pid, bit_val);
-				usleep(700);
+				usleep(100);
 			}
 			bit++;
 		}

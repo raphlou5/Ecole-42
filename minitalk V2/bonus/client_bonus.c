@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   client.c                                           :+:      :+:    :+:   */
+/*   client_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elevast <elevast@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 10:14:01 by elevast           #+#    #+#             */
-/*   Updated: 2024/05/30 10:48:54 by elevast          ###   ########.fr       */
+/*   Updated: 2024/05/30 13:40:01 by elevast          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,7 @@ void	send_string(int pid, const char *message)
 	int		bit_val;
 
 	i = 0;
-	ft_printf("Sending message: %s\n", message);
-	while (i <= strlen(message))
+	while (i <= ft_strlen(message))
 	{
 		c = message[i];
 		bit = 0;

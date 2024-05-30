@@ -6,13 +6,13 @@
 /*   By: elevast <elevast@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 10:14:13 by elevast           #+#    #+#             */
-/*   Updated: 2024/05/30 09:56:34 by elevast          ###   ########.fr       */
+/*   Updated: 2024/05/30 16:17:38 by elevast          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+//strjoin
 
-volatile sig_atomic_t	g_processing = 0;
+#include "minitalk.h"
 
 void	hdl_compl_msg(char **message, size_t *message_size, size_t *byte_count)
 {
@@ -26,8 +26,11 @@ void	hdl_compl_msg(char **message, size_t *message_size, size_t *byte_count)
 
 int	resize_message_buffer(char **message, size_t *message_size)
 {
+	size_t	old_size;
+
+	old_size = *message_size;
 	*message_size += 1024;
-	*message = realloc(*message, *message_size);
+	*message = ft_realloc(*message, old_size, *message_size);
 	if (!*message)
 	{
 		ft_printf("Failed to allocate memory");
@@ -59,11 +62,9 @@ void	handle_signal(int sig, siginfo_t *info, void *context)
 	static char		current_char = 0;
 
 	(void)context;
-	if (g_processing)
-		return ;
 	if (sig == SIGUSR1)
 	{
-		current_char |= (1 << bit_count);
+		current_char += (1 << bit_count);
 	}
 	bit_count++;
 	if (bit_count == 8)
@@ -72,10 +73,8 @@ void	handle_signal(int sig, siginfo_t *info, void *context)
 		current_char = 0;
 		bit_count = 0;
 	}
-	g_processing = 1;
 	kill(info->si_pid, SIGUSR2);
-	usleep(1000);
-	g_processing = 0;
+	usleep(200);
 }
 
 int	main(void)

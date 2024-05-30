@@ -23,6 +23,9 @@
 void	check_pid(int pid);
 void	check_the_end(char *str);
 void	check_the_message(char *str);
-int	ft_atoi(const char *str);
+int		ft_atoi(const char *str);
+size_t	ft_strlen(const char *s);
+void	*ft_realloc(void *ptr, size_t old_size, size_t new_size);
+int		ft_atoi(const char *str);
 
 #endif
