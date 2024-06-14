@@ -1,26 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   three_sort.c                                       :+:      :+:    :+:   */
+/*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elevast <elevast@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/14 09:01:46 by elevast           #+#    #+#             */
-/*   Updated: 2024/06/14 09:15:45 by elevast          ###   ########.fr       */
+/*   Created: 2023/08/13 10:42:43 by noldiane          #+#    #+#             */
+/*   Updated: 2023/11/08 11:04:10 by elevast          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/push_swap.h"
+#include "libft.h"
 
-void	three_sort(t_stack_node **a)
+int	ft_strlcat(char *dest, char const *src, unsigned int size)
 {
-	t_stack_node	*biggest_node;
+	unsigned int	i;
+	unsigned int	j;
+	unsigned int	res;
 
-	biggest_node = find_max(*a);
-	if (biggest_node == *a)
-		ra(a);
-	else if ((*a)->next == biggest_node)
-		rra(a);
-	if ((*a)->nbr > (*a)->next->nbr)
-		sa(a);
+	i = 0;
+	j = 0;
+	res = 0;
+	while (dest[i] != '\0')
+		i++;
+	while (src[res] != '\0')
+		res++;
+	if (size <= i)
+		res += size;
+	else
+		res += i;
+	while (src[j] != '\0' && (i + 1) < size)
+	{
+		dest[i] = src[j];
+		i++;
+		j++;
+	}
+	dest[i] = '\0';
+	return (res);
 }

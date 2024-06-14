@@ -1,26 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   three_sort.c                                       :+:      :+:    :+:   */
+/*   calloc.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elevast <elevast@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/14 09:01:46 by elevast           #+#    #+#             */
-/*   Updated: 2024/06/14 09:15:45 by elevast          ###   ########.fr       */
+/*   Created: 2023/10/17 15:56:50 by elevast           #+#    #+#             */
+/*   Updated: 2023/10/17 16:13:51 by elevast          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/push_swap.h"
+#include "libft.h"
+#include <stdlib.h>
+#include <stdio.h>
 
-void	three_sort(t_stack_node **a)
+void	*ft_calloc(size_t count, size_t size)
 {
-	t_stack_node	*biggest_node;
+	void	*ptr;
 
-	biggest_node = find_max(*a);
-	if (biggest_node == *a)
-		ra(a);
-	else if ((*a)->next == biggest_node)
-		rra(a);
-	if ((*a)->nbr > (*a)->next->nbr)
-		sa(a);
+	ptr = malloc(count * size);
+	if (ptr == NULL)
+		return (ptr);
+	ft_bzero(ptr, size * count);
+	return (ptr);
 }

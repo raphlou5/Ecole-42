@@ -1,26 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   three_sort.c                                       :+:      :+:    :+:   */
+/*   ft_lstadd_front.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elevast <elevast@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/14 09:01:46 by elevast           #+#    #+#             */
-/*   Updated: 2024/06/14 09:15:45 by elevast          ###   ########.fr       */
+/*   Created: 2023/11/07 10:31:47 by elevast           #+#    #+#             */
+/*   Updated: 2023/11/07 12:31:00 by elevast          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/push_swap.h"
+#include "libft.h"
 
-void	three_sort(t_stack_node **a)
+void	ft_lstadd_front(t_list **lst, t_list *new)
 {
-	t_stack_node	*biggest_node;
-
-	biggest_node = find_max(*a);
-	if (biggest_node == *a)
-		ra(a);
-	else if ((*a)->next == biggest_node)
-		rra(a);
-	if ((*a)->nbr > (*a)->next->nbr)
-		sa(a);
+	if (lst && new)
+	{
+		new->next = *lst;
+		*lst = new;
+	}
 }

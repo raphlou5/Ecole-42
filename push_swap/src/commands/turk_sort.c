@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   turk_sort.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elevast <elevast@student.42.fr>            +#+  +:+       +#+        */
+/*   By: edouard <edouard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 09:01:48 by elevast           #+#    #+#             */
-/*   Updated: 2024/06/14 09:18:45 by elevast          ###   ########.fr       */
+/*   Updated: 2024/06/14 10:46:23 by edouard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static void	min_on_top(t_stack_node **a)
 	}
 }
 
-void	sort_stacks(t_stack_node **a, t_stack_node **b)
+void	turk_sort(t_stack_node **a, t_stack_node **b)
 {
 	int	len_a;
 
@@ -59,7 +59,7 @@ void	sort_stacks(t_stack_node **a, t_stack_node **b)
 		init_nodes_a(*a, *b);
 		move_a_to_b(a, b);
 	}
-	sort_three(a);
+	three_sort(a);
 	while (*b)
 	{
 		init_nodes_b(*a, *b);

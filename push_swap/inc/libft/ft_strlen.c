@@ -1,26 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   three_sort.c                                       :+:      :+:    :+:   */
+/*   strlen.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elevast <elevast@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/14 09:01:46 by elevast           #+#    #+#             */
-/*   Updated: 2024/06/14 09:15:45 by elevast          ###   ########.fr       */
+/*   Created: 2023/10/16 13:31:59 by elevast           #+#    #+#             */
+/*   Updated: 2023/10/16 13:32:03 by elevast          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/push_swap.h"
+#include "libft.h"
 
-void	three_sort(t_stack_node **a)
+int	ft_strlen(const char *str)
 {
-	t_stack_node	*biggest_node;
+	int	i;
 
-	biggest_node = find_max(*a);
-	if (biggest_node == *a)
-		ra(a);
-	else if ((*a)->next == biggest_node)
-		rra(a);
-	if ((*a)->nbr > (*a)->next->nbr)
-		sa(a);
+	i = 0;
+	while (str[i])
+	{
+		i++;
+	}
+	return (i);
 }
