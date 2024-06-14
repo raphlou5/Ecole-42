@@ -9,6 +9,7 @@ SRCS        :=      src/push_swap/push_swap.c \
                           src/push_swap/errors.c \
                           src/push_swap/init_a_to_b.c \
                           src/push_swap/stack_init.c \
+                          src/push_swap/stack_init2.c \
                           src/push_swap/stack_utils.c \
                           src/commands/rev_rotate_both.c \
                           src/commands/rotate.c \
