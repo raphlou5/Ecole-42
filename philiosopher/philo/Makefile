@@ -23,7 +23,7 @@ all:		${NAME}
 bonus:		all
 
 clean:
-			@ ${RM} *.o */*.o */*/*.o
+			@ ${RM} *.o
 
 fclean:		clean
 			@ ${RM} ${NAME}

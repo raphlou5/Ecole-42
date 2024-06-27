@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: elevast <elevast@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/26 16:36:54 by elevast           #+#    #+#             */
+/*   Updated: 2024/06/27 14:00:12 by elevast          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
-void	philo_eats(t_philosopher *philo)
+void	philo_eat(t_philosopher *philo)
 {
-	t_info *info;
+	t_info	*info;
 
 	info = philo->info;
 	pthread_mutex_lock(&(info->forks[philo->left_fork_id]));
@@ -13,7 +25,7 @@ void	philo_eats(t_philosopher *philo)
 	philo_write(info, philo->id, "is eating");
 	philo->t_last_meal = timestamp();
 	pthread_mutex_unlock(&(info->meal_check));
-	smart_sleep(info->time_eat, info);
+	better_sleep(info->time_eat, info);
 	(philo->x_ate)++;
 	pthread_mutex_unlock(&(info->forks[philo->left_fork_id]));
 	pthread_mutex_unlock(&(info->forks[philo->right_fork_id]));
@@ -32,11 +44,11 @@ void	*p_thread(void *void_philosopher)
 		usleep(15000);
 	while (!(info->dieded))
 	{
-		philo_eats(philo);
+		philo_eat(philo);
 		if (info->all_ate)
 			break ;
 		philo_write(info, philo->id, "is sleeping");
-		smart_sleep(info->time_sleep, info);
+		better_sleep(info->time_sleep, info);
 		philo_write(info, philo->id, "is thinking");
 		i++;
 	}
@@ -45,7 +57,8 @@ void	*p_thread(void *void_philosopher)
 
 void	exit_philo(t_info *info, t_philosopher *philos)
 {
-	int i;
+	printf("la");
+	int	i;
 
 	i = -1;
 	while (++i < info->nb_philo)
@@ -58,7 +71,7 @@ void	exit_philo(t_info *info, t_philosopher *philos)
 
 void	death_checker(t_info *info, t_philosopher *p)
 {
-	int i;
+	int	i;
 
 	while (!(info->all_ate))
 	{
@@ -77,14 +90,15 @@ void	death_checker(t_info *info, t_philosopher *p)
 		if (info->dieded)
 			break ;
 		i = 0;
-		while (info->nb_eat != -1 && i < info->nb_philo && p[i].x_ate >= info->nb_eat)
+		while (info->nb_eat != -1 && i < info->nb_philo
+			&& p[i].x_ate >= info->nb_eat)
 			i++;
 		if (i == info->nb_philo)
 			info->all_ate = 1;
 	}
 }
 
-int		philo(t_info *info)
+int	philo(t_info *info)
 {
 	int				i;
 	t_philosopher	*philo;
@@ -100,6 +114,7 @@ int		philo(t_info *info)
 		i++;
 	}
 	death_checker(info, info->philosophers);
+	printf("coucou");
 	exit_philo(info, philo);
 	return (0);
 }

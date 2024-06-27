@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: elevast <elevast@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/26 16:36:56 by elevast           #+#    #+#             */
+/*   Updated: 2024/06/27 09:47:34 by elevast          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PHILO_H
 # define PHILO_H
 
@@ -8,9 +20,9 @@
 # include <string.h>
 # include <pthread.h>
 
-struct s_info;
+struct	s_info;
 
-typedef	struct			s_philosopher
+typedef struct s_philosopher
 {
 	int					id;
 	int					x_ate;
@@ -21,7 +33,7 @@ typedef	struct			s_philosopher
 	pthread_t			thread_id;
 }						t_philosopher;
 
-typedef struct			s_info
+typedef struct s_info
 {
 	int					nb_philo;
 	int					time_death;
@@ -37,13 +49,12 @@ typedef struct			s_info
 	t_philosopher		philosophers[250];
 }						t_info;
 
-
 void		philo_write(t_info *info, int id, char *string);
-int		philo(t_info *info);
-int	ft_atoi(char *str);
+int			philo(t_info *info);
+int			ft_atoi(char *str);
 long long	timestamp(void);
 long long	time_diff(long long past, long long pres);
-void		smart_sleep(long long time, t_info *info);
-int	init_all(t_info *info, char **argv);
+void		better_sleep(long long time, t_info *info);
+int			init_all(t_info *info, char **argv);
 
 #endif

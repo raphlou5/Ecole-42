@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: elevast <elevast@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/26 16:37:01 by elevast           #+#    #+#             */
+/*   Updated: 2024/06/27 09:39:12 by elevast          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 int	my_isspace(char c)
 {
 	return (c == ' ' || c == '\t' || c == '\n'
-	 || c == '\v' || c == '\f' || c == '\r');
+		|| c == '\v' || c == '\f' || c == '\r');
 }
 
 int	ft_atoi(char *str)
@@ -16,23 +28,19 @@ int	ft_atoi(char *str)
 	i = 0;
 	resultat = 0;
 	while (my_isspace(str[i]))
-	{
 		i++;
-	}
 	while (str[i] == '-' || str[i] == '+')
 	{
 		if (str[i] == '-')
-		{
 			return (-1);
-		}
 		i++;
 	}
 	while (str[i])
 	{
-        if(str[i] >= '0' && str[i] <= '9')
-		    resultat = resultat * 10 + (str[i] - '0');
-        else
-            return (-1);
+		if (str[i] >= '0' && str[i] <= '9')
+			resultat = resultat * 10 + (str[i] - '0');
+		else
+			return (-1);
 		i++;
 	}
 	return (resultat * signe);
@@ -51,9 +59,9 @@ long long	time_diff(long long past, long long pres)
 	return (pres - past);
 }
 
-void		smart_sleep(long long time, t_info *info)
+void	better_sleep(long long time, t_info *info)
 {
-	long long i;
+	long long	i;
 
 	i = timestamp();
 	while (!(info->dieded))

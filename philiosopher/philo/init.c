@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: elevast <elevast@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/26 16:36:47 by elevast           #+#    #+#             */
+/*   Updated: 2024/06/27 13:01:02 by elevast          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 int	init_mutex(t_info *info)
 {
-	int i;
+	int	i;
 
 	i = info->nb_philo;
 	while (--i >= 0)
@@ -19,7 +31,7 @@ int	init_mutex(t_info *info)
 
 int	init_philosophers(t_info *info)
 {
-	int i;
+	int	i;
 
 	i = info->nb_philo;
 	while (--i >= 0)
@@ -42,8 +54,8 @@ int	init_all(t_info *info, char **argv)
 	info->time_sleep = ft_atoi(argv[4]);
 	info->all_ate = 0;
 	info->dieded = 0;
-	if (info->nb_philo < 2 || info->time_death < 0 || info->time_eat < 0
-		|| info->time_sleep < 0 || info->nb_philo > 250)
+	if (info->time_death < 0 || info->time_eat < 0
+		|| info->time_sleep < 0 || info->nb_philo > 200)
 		return (1);
 	if (argv[5])
 	{
