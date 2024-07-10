@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elevast <elevast@student.42.fr>            +#+  +:+       +#+        */
+/*   By: edouard <edouard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 16:36:54 by elevast           #+#    #+#             */
-/*   Updated: 2024/06/27 14:00:12 by elevast          ###   ########.fr       */
+/*   Updated: 2024/07/10 14:50:57 by edouard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,15 @@ void	philo_eat(t_philosopher *philo)
 	t_info	*info;
 
 	info = philo->info;
+	if (info->nb_philo == 1)
+	{
+		pthread_mutex_lock(&(info->forks[philo->left_fork_id]));
+		philo_write(info, philo->id, "has taken a fork");
+		philo_write(info, philo->id, "died");
+		info->dieded = 1;
+		pthread_mutex_unlock(&(info->forks[philo->left_fork_id]));
+		return;
+	}
 	pthread_mutex_lock(&(info->forks[philo->left_fork_id]));
 	philo_write(info, philo->id, "has taken a fork");
 	pthread_mutex_lock(&(info->forks[philo->right_fork_id]));
@@ -57,7 +66,6 @@ void	*p_thread(void *void_philosopher)
 
 void	exit_philo(t_info *info, t_philosopher *philos)
 {
-	printf("la");
 	int	i;
 
 	i = -1;
@@ -114,7 +122,6 @@ int	philo(t_info *info)
 		i++;
 	}
 	death_checker(info, info->philosophers);
-	printf("coucou");
 	exit_philo(info, philo);
 	return (0);
 }
